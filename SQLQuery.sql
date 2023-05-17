@@ -1,20 +1,22 @@
 create database Mercado;
 USE Mercado
 GO
-/** Object:  Table [dbo].[Abonos]    Script Date: 5/16/2023 7:03:18 PM **/
+
+
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[Abonos](
-	[idAbono] [varchar](50) NOT NULL,
-	[idCliente] [varchar](13) NOT NULL,
-	[idCuenta] [varchar](50) NOT NULL,
-	[cantidad] [money] NOT NULL,
-	[fechaAbono] [datetime] NOT NULL,
- CONSTRAINT [PK_Abonos] PRIMARY KEY CLUSTERED 
+CREATE TABLE [dbo].[Caja](
+	[idCaja] [varchar](50) NOT NULL,
+	[montoInicial] [money] NOT NULL,
+	[inicio] [datetime] NOT NULL,
+	[final] [datetime] NULL,
+	[montoCierre] [money] NULL,
+ CONSTRAINT [PK_Caja] PRIMARY KEY CLUSTERED 
 (
-	[idAbono] ASC
+	[idCaja] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
@@ -23,20 +25,19 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE [dbo].[Caja](
-	[idCaja] [varchar](50) NOT NULL,
-	[cantidadInicial] [money] NOT NULL,
-	[inicio] [datetime] NOT NULL,
-	[final] [datetime] NULL,
-	[cantidadActual] [money] NOT NULL,
-	[cantidadCierre] [money] NULL,
- CONSTRAINT [PK_Caja] PRIMARY KEY CLUSTERED 
+CREATE TABLE [dbo].[Abonos](
+	[idAbono] [varchar](50) NOT NULL,
+	[idCliente] [varchar](13) NOT NULL,
+	[idCuenta] [varchar](50) NOT NULL,
+	[monto] [money] NOT NULL,
+	[fechaAbono] [datetime] NOT NULL,
+ CONSTRAINT [PK_Abonos] PRIMARY KEY CLUSTERED 
 (
-	[idCaja] ASC
+	[idAbono] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/** Object:  Table [dbo].[Clientes]    Script Date: 5/16/2023 7:03:18 PM **/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -54,7 +55,7 @@ CREATE TABLE [dbo].[Clientes](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/** Object:  Table [dbo].[Creditos]    Script Date: 5/16/2023 7:03:18 PM **/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -72,7 +73,7 @@ CREATE TABLE [dbo].[Creditos](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/** Object:  Table [dbo].[Gastos]    Script Date: 5/16/2023 7:03:18 PM **/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -83,7 +84,7 @@ CREATE TABLE [dbo].[Gastos](
 	[idPedido] [varchar](50) NULL,
 	[descripcion] [varchar](50) NULL,
 	[tipo] [varchar](50) NOT NULL,
-	[cantidad] [money] NOT NULL,
+	[monto] [money] NOT NULL,
 	[fecha] [datetime] NOT NULL,
  CONSTRAINT [PK_Gastos] PRIMARY KEY CLUSTERED 
 (
@@ -91,7 +92,7 @@ CREATE TABLE [dbo].[Gastos](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/** Object:  Table [dbo].[Ingresos]    Script Date: 5/16/2023 7:03:18 PM **/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -100,7 +101,7 @@ CREATE TABLE [dbo].[Ingresos](
 	[idIngreso] [varchar](50) NOT NULL,
 	[idCaja] [varchar](50) NOT NULL,
 	[descripcion] [varchar](50) NULL,
-	[cantidad] [money] NOT NULL,
+	[monto] [money] NOT NULL,
 	[fecha] [datetime] NOT NULL,
  CONSTRAINT [PK_Ingresos] PRIMARY KEY CLUSTERED 
 (
@@ -108,7 +109,7 @@ CREATE TABLE [dbo].[Ingresos](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/** Object:  Table [dbo].[Pedidos]    Script Date: 5/16/2023 7:03:18 PM **/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -127,7 +128,7 @@ CREATE TABLE [dbo].[Pedidos](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/** Object:  Table [dbo].[Productos]    Script Date: 5/16/2023 7:03:18 PM **/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -144,7 +145,7 @@ CREATE TABLE [dbo].[Productos](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/** Object:  Table [dbo].[Proveedores]    Script Date: 5/16/2023 7:03:18 PM **/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -160,7 +161,7 @@ CREATE TABLE [dbo].[Proveedores](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/** Object:  Table [dbo].[Vendedor]    Script Date: 5/16/2023 7:03:18 PM **/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -177,38 +178,38 @@ CREATE TABLE [dbo].[Vendedor](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-INSERT [dbo].[Abonos] ([idAbono], [idCliente], [idCuenta], [cantidad], [fechaAbono]) VALUES (N'hgfyhg', N'1806199400345', N'wqjndlka', 1500.0000, CAST(N'2023-05-16T00:00:00.000' AS DateTime))
+INSERT [dbo].[Abonos] ([idAbono], [idCliente], [idCuenta], [monto], [fechaAbono]) VALUES (N'hgfyhg', N'1808199700437', N'wqjndlka', 1500.0000, CAST(N'2023-05-16T00:00:00.000' AS DateTime))
 GO
-INSERT [dbo].[Caja] ([idCaja], [cantidadInicial], [inicio], [final], [cantidadActual], [cantidadCierre]) VALUES (N'1651651', 1500.0000, CAST(N'2023-05-14T11:59:19.000' AS DateTime), CAST(N'2023-05-14T18:59:19.000' AS DateTime), 3600.0000, 3600.0000)
-INSERT [dbo].[Caja] ([idCaja], [cantidadInicial], [inicio], [final], [cantidadActual], [cantidadCierre]) VALUES (N'651265156', 3600.0000, CAST(N'2023-05-15T11:59:19.000' AS DateTime), CAST(N'2323-05-15T18:00:00.000' AS DateTime), 1450.0000, 1450.0000)
+INSERT [dbo].[Caja] ([idCaja], [montoInicial], [inicio], [final], [montoCierre]) VALUES (N'1651651', 1500.0000, CAST(N'2023-05-14T11:59:19.000' AS DateTime), CAST(N'2023-05-14T18:59:19.000' AS DateTime), 3600.0000, 3600.0000)
+INSERT [dbo].[Caja] ([idCaja], [montoInicial], [inicio], [final], [montoCierre]) VALUES (N'651265156', 3600.0000, CAST(N'2023-05-15T11:59:19.000' AS DateTime), CAST(N'2323-05-15T18:00:00.000' AS DateTime), 1450.0000, 1450.0000)
 GO
-INSERT [dbo].[Clientes] ([idCliente], [nombre], [apellido],[telefono], [correo], [cuenta]) VALUES (N'0502200202079', N'Pamela', N'Suazo', N'96423295', N'p.suazo@gmail.com', 0.0000)
-INSERT [dbo].[Clientes] ([idCliente], [nombre], [apellido],[telefono], [correo], [cuenta]) VALUES (N'16516565165', N'Nicole', N'Joya', N'96423295', N'n.suazo@gmail.com', 0.0000)
-INSERT [dbo].[Clientes] ([idCliente], [nombre], [apellido],[telefono], [correo], [cuenta]) VALUES (N'1806199400345', N'Ernesto', N'Medina',N'96423295', N'ernesto@gmail.com', 2500.0000)
-INSERT [dbo].[Clientes] ([idCliente], [nombre], [apellido], [telefono], [correo],[cuenta]) VALUES (N'184979914848', N'Joshua', N'Perez', N'96423295', N'joshua@gmail.com', 0.0000)
-INSERT [dbo].[Clientes] ([idCliente], [nombre], [apellido],[telefono], [correo], [cuenta]) VALUES (N'484654584688', N'Javier', N'Joya', N'96423295', N'javier@gmail.com', 0.0000)
-INSERT [dbo].[Clientes] ([idCliente], [nombre], [apellido], [telefono], [correo],[cuenta]) VALUES (N'5165165165', N'Elmer', N'Martinez', N'96423295', N'elmer@gmail.com', 0.0000)
-GO
-INSERT [dbo].[Creditos] ([idCredito], [idCliente], [compra], [total], [fechaPago], [pagado]) VALUES (N'asdasdasd', N'1806199400345', N'''0'', ''0502200202079'', ''2023-01-31 09:17:09.373219'', ''[{\"descripcionProducto\":\"queso crema lbs\",\"precioProducto\":42.0,\"cantidad\":2,\"total\":84.0,\"codigoProducto\":\"queso c\"},{\"descripcionProducto\":\"cafe unidad\",\"precioProducto\":3.0,\"cantidad\":1,\"total\":3.0,\"codigoProducto\":\" 7421830700541\"}]'', ''87.00'', ''1''
+INSERT [dbo].[Clientes] ([idCliente], [nombre], [apellido],[telefono], [correo], [cuenta]) VALUES (N'0512200500095', N'Pamela', N'Suazo', N'96423295', N'p.suazo@gmail.com', 0.0000)
+INSERT [dbo].[Clientes] ([idCliente], [nombre], [apellido],[telefono], [correo], [cuenta]) VALUES (N'0212199800223', N'Nicole', N'Rodriguez', N'96423295', N'n.suazo@gmail.com', 0.0000)
+INSERT [dbo].[Clientes] ([idCliente], [nombre], [apellido],[telefono], [correo], [cuenta]) VALUES (N'1808199700437', N'Ernesto', N'Velasquez',N'96423295', N'ernesto@gmail.com', 2500.0000)
+INSERT [dbo].[Clientes] ([idCliente], [nombre], [apellido], [telefono], [correo],[cuenta]) VALUES (N'051420000043', N'Joshua', N'Almendarez', N'96423295', N'joshua@gmail.com', 0.0000)
+INSERT [dbo].[Clientes] ([idCliente], [nombre], [apellido],[telefono], [correo], [cuenta]) VALUES (N'393765789002', N'Javier', N'Mendoza', N'96423295', N'javier@gmail.com', 0.0000)
+INSERT [dbo].[Clientes] ([idCliente], [nombre], [apellido], [telefono], [correo],[cuenta]) VALUES (N'8964573574', N'Nicolas', N'Castellano', N'96423295', N'nicolas@gmail.com', 0.0000)
+GO 
+INSERT [dbo].[Creditos] ([idCredito], [idCliente], [compra], [total], [fechaPago], [pagado]) VALUES (N'jdhdhawuhuk', N'1808199700437', N'''0'', ''0512200500095'', ''2023-01-31 09:17:09.373219'', ''[{\"descripcionProducto\":\"queso crema lbs\",\"precioProducto\":42.0,\"monto\":2,\"total\":84.0,\"codigoProducto\":\"queso c\"},{\"descripcionProducto\":\"cafe unidad\",\"precioProducto\":3.0,\"monto\":1,\"total\":3.0,\"codigoProducto\":\" 7421830700541\"}]'', ''87.00'', ''1''
 ', 2500.0000, CAST(N'0023-05-15' AS Date), 0)
-INSERT [dbo].[Creditos] ([idCredito], [idCliente], [compra], [total], [fechaPago], [pagado]) VALUES (N'wqjndlka', N'0502200202079', N'''0'', ''0502200202079'', ''2023-01-31 09:17:09.373219'', ''[{\"descripcionProducto\":\"queso crema lbs\",\"precioProducto\":42.0,\"cantidad\":2,\"total\":84.0,\"codigoProducto\":\"queso c\"},{\"descripcionProducto\":\"cafe unidad\",\"precioProducto\":3.0,\"cantidad\":1,\"total\":3.0,\"codigoProducto\":\" 7421830700541\"}]'', ''87.00'', ''1''
+INSERT [dbo].[Creditos] ([idCredito], [idCliente], [compra], [total], [fechaPago], [pagado]) VALUES (N'zzzzzzz', N'0512200500095', N'''0'', ''0512200500095'', ''2023-01-31 09:17:09.373219'', ''[{\"descripcionProducto\":\"queso crema lbs\",\"precioProducto\":42.0,\"monto\":2,\"total\":84.0,\"codigoProducto\":\"queso c\"},{\"descripcionProducto\":\"cafe unidad\",\"precioProducto\":3.0,\"monto\":1,\"total\":3.0,\"codigoProducto\":\" 7421830700541\"}]'', ''87.00'', ''1''
 ', 1500.0000, CAST(N'2023-05-16' AS Date), 0)
 GO
-INSERT [dbo].[Gastos] ([idGasto], [idCaja], [idPedido], [descripcion], [tipo], [cantidad], [fecha]) VALUES (N'1651165', N'1651651', N'65465651', N'Pago de energia', N'servicio', 460.0000, CAST(N'2023-05-16T11:59:19.000' AS DateTime))
+INSERT [dbo].[Gastos] ([idGasto], [idCaja], [idPedido], [descripcion], [tipo], [monto], [fecha]) VALUES (N'1651165', N'1651651', N'65465651', N'Pago de energia', N'servicio', 460.0000, CAST(N'2023-05-16T11:59:19.000' AS DateTime))
 GO
-INSERT [dbo].[Ingresos] ([idIngreso], [idCaja], [descripcion], [cantidad], [fecha]) VALUES (N'12312344', N'1651651', N'Bono MPymes', 3200.0000, CAST(N'2023-05-12T11:59:19.000' AS DateTime))
+INSERT [dbo].[Ingresos] ([idIngreso], [idCaja], [descripcion], [monto], [fecha]) VALUES (N'12312344', N'1651651', N'Bono MPymes', 3200.0000, CAST(N'2023-05-12T11:59:19.000' AS DateTime))
 GO
-INSERT [dbo].[Pedidos] ([idPedido], [idVendedor], [compra], montoTotal, [fechaPago], [montoPagado], [entregado]) VALUES (N'65465651', N'18046456465', N'''1'', ''0502200202079'', ''2023-01-31 09:19:00.396852'', ''[{\"descripcionProducto\":\"harina fardo preparada\",\"precioProducto\":260.0,\"cantidad\":7,\"total\":1820.0,\"codigoProducto\":\"a harina p\"}]'', ''1820.00'', ''1''
+INSERT [dbo].[Pedidos] ([idPedido], [idVendedor], [compra], montoTotal, [fechaPago], [montoPagado], [entregado]) VALUES (N'65465651', N'18046357071', N'''1'', ''0512200500095'', ''2023-01-31 09:19:00.396852'', ''[{\"descripcionProducto\":\"harina fardo preparada\",\"precioProducto\":260.0,\"monto\":7,\"total\":1820.0,\"codigoProducto\":\"a harina p\"}]'', ''1820.00'', ''1''
 ', 460.0000, CAST(N'2023-05-16' AS Date), 1, 1)
 GO
-INSERT [dbo].[Productos] ([codigo], [nombre], [precioVenta], [disponibles], [ventaTotal]) VALUES (N'123456', N'Pasta Dental', 17.0000, 6, 3)
-INSERT [dbo].[Productos] ([codigo], [nombre], [precioVenta], [disponibles], [ventaTotal]) VALUES (N'12364', N'Shampoo', 10.0000, 4, 12)
+INSERT [dbo].[Productos] ([codigo], [nombre], [precioVenta], [disponibles], [ventaTotal]) VALUES (N'123456', N'Leche', 17.0000, 6, 3)
+INSERT [dbo].[Productos] ([codigo], [nombre], [precioVenta], [disponibles], [ventaTotal]) VALUES (N'12364', N'Cereal', 10.0000, 4, 12)
 GO
-INSERT [dbo].[Proveedores] ([idVendedor], [codigo], [precio]) VALUES (N'18046456465', N'123456', 14.0000)
-INSERT [dbo].[Proveedores] ([idVendedor], [codigo], [precio]) VALUES (N'18046456465', N'12364', 8.0000)
+INSERT [dbo].[Proveedores] ([idVendedor], [codigo], [precio]) VALUES (N'18046357071', N'123456', 14.0000)
+INSERT [dbo].[Proveedores] ([idVendedor], [codigo], [precio]) VALUES (N'18046357071', N'12364', 8.0000)
 GO
-INSERT [dbo].[Vendedor] ([idVendedor], [nombre], [apellido], [empresa], [cuenta]) VALUES (N'18046456465', N'Jose', N'Velasquez', N'Individual', 1300.0000)
-INSERT [dbo].[Vendedor] ([idVendedor], [nombre], [apellido], [empresa], [cuenta]) VALUES (N'65416565165', N'Julissa', N'Soto', N'DINANT', 0.0000)
+INSERT [dbo].[Vendedor] ([idVendedor], [nombre], [apellido], [empresa], [cuenta]) VALUES (N'18046357071', N'Jose', N'Velasquez', N'Sula', 1300.0000)
+INSERT [dbo].[Vendedor] ([idVendedor], [nombre], [apellido], [empresa], [cuenta]) VALUES (N'65416565165', N'Julissa', N'Soto', N'KELLOGS', 0.0000)
 GO
 ALTER TABLE [dbo].[Clientes] ADD  CONSTRAINT [DF_Clientes_cuenta]  DEFAULT ((0)) FOR [cuenta]
 GO
